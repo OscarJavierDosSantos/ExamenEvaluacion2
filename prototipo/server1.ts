@@ -1,6 +1,7 @@
 // Importación de módulos necesarios.
 import express from "express"; // Framework Express.js para construir la API REST.
 import { products } from "./mock.js"; // Importar el mock de nuestros items de prueba.
+import crypto from "crypto"; // Importar el módulo crypto para generar UUIDs.
 const MESSAGE = "Product not found";
 
 // Crear una instancia de la aplicación Express.
@@ -33,10 +34,10 @@ app.get("/products/:id", (req, res) => {
 // Método POST para crear un nuevo item.
 app.post("/products", (req, res) => {
   // Extraer datos del cuerpo de la solicitud para la creación del item.
-  const { id, name, price, stock, is_active } = req.body;
+  const { name, price, stock, is_active } = req.body;
   // Atributos para la creación del nuevo item
   const newProduct = {
-    id,
+    id: crypto.randomUUID(), // Generar un UUID único para el nuevo producto.
     name,
     price,
     stock,
